@@ -29,7 +29,7 @@ jobs:
       #     wait_workflow: true
       - name: TRIGGER WORKFLOW
         run: |
-              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip"}' | gh workflow rundownload_dispatch.yml --json
+              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip"}' | gh workflow run download_dispatch.yml --json
               gh workflow run 88013593 -f JM_ALBUM_IDS=${{ env.CURRENTID }} 
       # - name: trigger download workflow
       #   run: |

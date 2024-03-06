@@ -14,20 +14,23 @@ jobs:
       - name: get current id
         run: echo "CURRENTID=$(awk '{print}' current_id)" >> $GITHUB_ENV
         
-      - uses: convictional/trigger-workflow-and-wait@v1.6.1
-        with:
-          owner: keithconvictional
-          repo: myrepo
-          github_token: ${{secrets.PERSONAL_TOKEN}}
-          github_user: github-user
-          workflow_file_name: download_dispatch.yml
-          ref: master
-          wait_interval: 10
-          client_payload: '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}","IMAGE_SUFFIX":"png","ZIP_NAME":"${{ env.CURRENTID }}.zip"}'
-          propagate_failure: false
-          trigger_workflow: true
-          wait_workflow: true
-
+      # - uses: convictional/trigger-workflow-and-wait@v1.6.1
+      #   with:
+      #     owner: keithconvictional
+      #     repo: myrepo
+      #     github_token: ${{secrets.PERSONAL_TOKEN}}
+      #     github_user: github-user
+      #     workflow_file_name: download_dispatch.yml
+      #     ref: master
+      #     wait_interval: 10
+      #     client_payload: '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}","IMAGE_SUFFIX":"png","ZIP_NAME":"${{ env.CURRENTID }}.zip"}'
+      #     propagate_failure: false
+      #     trigger_workflow: true
+      #     wait_workflow: true
+      - name: TRIGGER WORKFLOW
+        run: |
+              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip"}' | gh workflow rundownload_dispatch.yml --json
+              gh workflow run 88013593 -f JM_ALBUM_IDS=${{ env.CURRENTID }} 
       # - name: trigger download workflow
       #   run: |
       #         gh api \

@@ -25,6 +25,8 @@ jobs:
 
       - name: Commit files
         run: |
+              git config --local user.email "370933147@qq.com"
+              git config --local user.name "GodLufei"
               git commit -a -m "update current_id"
           
       - name: Push changes

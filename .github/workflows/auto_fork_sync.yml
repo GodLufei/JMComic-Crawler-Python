@@ -1,9 +1,9 @@
-# .github/workflows/auto_fork_sync.yml
+# auto_fork_sync.yml
 name: Sync Fork
 
 on:
   schedule:
-    - cron: '0 0 12 * * ?'
+    - cron: '0 16 * * *'
 jobs:
   repo-sync:
     runs-on: ubuntu-latest

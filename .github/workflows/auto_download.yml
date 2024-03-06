@@ -23,7 +23,7 @@ jobs:
           workflow_file_name: download_dispatch.yml
           ref: master
           wait_interval: 10
-          client_payload: '{\"JM_ALBUM_IDS\":\"${{ env.CURRENTID }}\",\"IMAGE_SUFFIX\":\"png\",\"ZIP_NAME\":\"${{ env.CURRENTID }}.zip\"}'
+          client_payload: '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}","IMAGE_SUFFIX":"png","ZIP_NAME":"${{ env.CURRENTID }}.zip"}'
           propagate_failure: false
           trigger_workflow: true
           wait_workflow: true

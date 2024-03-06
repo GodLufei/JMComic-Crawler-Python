@@ -4,7 +4,7 @@ name: Auto download
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '0 10 * * *'
 jobs:
   auto-download:
     runs-on: ubuntu-latest
@@ -13,35 +13,14 @@ jobs:
 
       - name: get current id
         run: echo "CURRENTID=$(awk '{print}' current_id)" >> $GITHUB_ENV
-        
-      # - uses: convictional/trigger-workflow-and-wait@v1.6.1
-      #   with:
-      #     owner: keithconvictional
-      #     repo: myrepo
-      #     github_token: ${{secrets.PERSONAL_TOKEN}}
-      #     github_user: github-user
-      #     workflow_file_name: download_dispatch.yml
-      #     ref: master
-      #     wait_interval: 10
-      #     client_payload: '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}","IMAGE_SUFFIX":"png","ZIP_NAME":"${{ env.CURRENTID }}.zip"}'
-      #     propagate_failure: false
-      #     trigger_workflow: true
-      #     wait_workflow: true
+      
       - name: TRIGGER WORKFLOW
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip"}' | gh workflow run download_dispatch.yml --json
+              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip", "UPLOAD_NAME":"漫画${{ env.CURRENTID }}"}' | gh workflow run download_dispatch.yml --json
               gh workflow run 88013593 -f JM_ALBUM_IDS=${{ env.CURRENTID }} 
-      # - name: trigger download workflow
-      #   run: |
-      #         gh api \
-      #         --method PUT \
-      #         -H "Accept: application/vnd.github+json" \
-      #         -H "X-GitHub-Api-Version: 2022-11-28" \
-      #         /repos/GodLufei/JMComic-Crawler-Python/actions/workflows/88013593/enable
-      #         curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{secrets.PERSONAL_TOKEN}}" https://api.github.com/repos/GodLufei/JMComic-Crawler-Python/actions/workflows/88013593 -d "{\"JM_ALBUM_IDS\":\"${{ env.CURRENTID }}\",\"IMAGE_SUFFIX\":\"png\",\"ZIP_NAME\":\"${{ env.CURRENTID }}.zip\"}"
-
+  
       - name: change current id
         run: current_id=$(awk '{sum = $0+1; print sum}' current_id) && echo $current_id > current_id 
 
@@ -56,7 +35,3 @@ jobs:
         with:
           github_token: ${{ secrets.PERSONAL_TOKEN }}
           branch: ${{ github.ref }}
-
-
-      # - name: git push 
-      #   run: git add . && git commit -m 'update current_id' && git push origin head

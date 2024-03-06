@@ -17,9 +17,7 @@ jobs:
         
       - name: trigger download workflow
         run: |
-              curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{secrets.PERSONAL_TOKEN}}" -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/GodLufei/JMComic-Crawler-Python/actions/workflows/download_dispatch.yml \
-              -d "{\"JM_ALBUM_IDS\":\"${{ env.CURRENTID }}\",\"IMAGE_SUFFIX\":\"png\",\"ZIP_NAME\":\"${{ env.CURRENTID }}.zip\"}"
+              curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{secrets.PERSONAL_TOKEN}}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/GodLufei/JMComic-Crawler-Python/actions/workflows/88013593 -d "{\"JM_ALBUM_IDS\":\"${{ env.CURRENTID }}\",\"IMAGE_SUFFIX\":\"png\",\"ZIP_NAME\":\"${{ env.CURRENTID }}.zip\"}"
 
       - name: change current id
         run: current_id=$(awk '{sum = $0+1; print sum}' current_id) && echo $current_id > current_id 

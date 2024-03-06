@@ -28,6 +28,8 @@ jobs:
       #     trigger_workflow: true
       #     wait_workflow: true
       - name: TRIGGER WORKFLOW
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
               echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip"}' | gh workflow run download_dispatch.yml --json
               gh workflow run 88013593 -f JM_ALBUM_IDS=${{ env.CURRENTID }} 

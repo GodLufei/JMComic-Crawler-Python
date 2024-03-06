@@ -13,5 +13,6 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           owner: hect0x7
+          auto_approve: true
           head: master # fork 的上游仓库 branch
           base: master # 本地仓库 branch

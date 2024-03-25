@@ -18,7 +18,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.zip", "UPLOAD_NAME":"漫画${{ env.CURRENTID }}"}' | gh workflow run download_dispatch.yml --json
+              echo '{"JM_ALBUM_IDS":"${{ env.CURRENTID }}", "IMAGE_SUFFIX":"png", "ZIP_NAME":"${{ env.CURRENTID }}.tar.gz", "UPLOAD_NAME":"漫画${{ env.CURRENTID }}"}' | gh workflow run download_dispatch.yml --json
   
       - name: change current id
         run: current_id=$(awk '{sum = $0+1; print sum}' current_id) && echo $current_id > current_id 

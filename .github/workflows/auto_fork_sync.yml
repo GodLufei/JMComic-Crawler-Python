@@ -6,13 +6,44 @@ on:
   schedule:
     - cron: '0 9 * * *'
 jobs:
-  repo-sync:
+  sync_with_upstream:
     runs-on: ubuntu-latest
+    name: Sync main with upstream latest
+
     steps:
-      - uses: tgymnich/fork-sync@v1.8
-        with:
-          token: ${{ secrets.PERSONAL_TOKEN }}
-          owner: hect0x7
-          auto_approve: true
-          head: master # fork 的上游仓库 branch
-          base: master # 本地仓库 branch
+    # Step 1: run a standard checkout action, provided by github
+    - name: Checkout master
+      uses: actions/checkout@v4
+      with:
+        ref: master
+        # submodules: 'recursive'     ### may be needed in your situation
+
+    # Step 2: run this sync action - specify the upstream repo, upstream branch to sync with, and target sync branch
+    - name: Pull (Fast-Forward) upstream changes
+      id: sync
+      uses: aormsby/Fork-Sync-With-Upstream-action@v2.1
+      with:
+        upstream_repository: aormsby/hugo-deploy-to-pages
+        upstream_branch: master
+        target_branch: master
+        git_pull_args: --ff-only                    # optional arg use, defaults to simple 'pull'
+        github_token: ${{ secrets.PERSONAL_TOKEN }}   # optional, for accessing repos that require authentication
+
+    # Step 3: Display a message if 'sync' step had new commits (simple test)
+    - name: Check for new commits
+      if: steps.sync.outputs.has_new_commits
+      run: echo "There were new commits."
+
+    # Step 4: Print a helpful timestamp for your records (not required, just nice)
+    - name: Timestamp
+      run: date
+  # repo-sync:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: tgymnich/fork-sync@v1.8
+  #       with:
+  #         token: ${{ secrets.PERSONAL_TOKEN }}
+  #         owner: hect0x7
+  #         auto_approve: true
+  #         head: master # fork 的上游仓库 branch
+  #         base: master # 本地仓库 branch

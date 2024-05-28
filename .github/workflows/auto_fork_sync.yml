@@ -27,7 +27,6 @@ jobs:
         upstream_branch: master
         target_branch: master
         git_pull_args: --rebase
-        git_pull_rebase_config: true
         github_token: ${{ secrets.PERSONAL_TOKEN }}   # optional, for accessing repos that require authentication
 
     # Step 3: Display a message if 'sync' step had new commits (simple test)

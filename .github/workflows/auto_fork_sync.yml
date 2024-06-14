@@ -44,7 +44,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           owner: hect0x7
-          auto_approve: true
+          auto_approve: false
           ignore_fail: true
           auto_merge: true
           head: master # fork 的上游仓库 branch

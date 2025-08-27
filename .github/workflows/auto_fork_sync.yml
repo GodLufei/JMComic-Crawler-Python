@@ -24,6 +24,7 @@ jobs:
         target_repo_token: ${{ secrets.GITHUB_TOKEN }}
         upstream_sync_branch: master
         upstream_sync_repo: hect0x7/JMComic-Crawler-Python
+        test_mode: true
 
   # sync_with_upstream:
   #   runs-on: ubuntu-latest

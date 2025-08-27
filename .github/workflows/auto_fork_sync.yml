@@ -6,69 +6,14 @@ on:
   schedule:
     - cron: '0 9 * * *'
 jobs:
-  sync_latest_from_upstream:
+  sync:
+
     runs-on: ubuntu-latest
-    name: Sync latest commits from upstream repo
 
     steps:
-    - name: Checkout target repo
-      uses: actions/checkout@v4
-      with:
-        ref:  master
-
-    - name: Sync upstream changes
-      id: sync
-      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
-      with:
-        target_sync_branch: master
-        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
-        upstream_sync_branch: master
-        upstream_sync_repo: hect0x7/JMComic-Crawler-Python
-
-  # sync_with_upstream:
-  #   runs-on: ubuntu-latest
-  #   name: Sync main with upstream latest
-
-  #   steps:
-  #   # Step 1: run a standard checkout action, provided by github
-  #   - name: Checkout master
-  #     uses: actions/checkout@v4
-  #     with:
-  #       ref: master
-  #       # submodules: 'recursive'     ### may be needed in your situation
-
-  #   # Step 2: run this sync action - specify the upstream repo, upstream branch to sync with, and target sync branch
-  #   - name: Pull (Fast-Forward) upstream changes
-  #     id: sync
-  #     uses: aormsby/Fork-Sync-With-Upstream-action@v2.1
-  #     with:
-  #       upstream_repository: hect0x7/JMComic-Crawler-Python
-  #       upstream_branch: master
-  #       target_branch: master
-  #       git_pull_args: '--allow-unrelated-histories'
-  #       github_token: ${{ secrets.PERSONAL_TOKEN }}   # optional, for accessing repos that require authentication
-
-  #   # Step 3: Display a message if 'sync' step had new commits (simple test)
-  #   - name: Check for new commits
-  #     if: steps.sync.outputs.has_new_commits
-  #     run: echo "There were new commits."
-
-  #   # Step 4: Print a helpful timestamp for your records (not required, just nice)
-  #   - name: Timestamp
-  # #     run: date
-  # repo-sync:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: tgymnich/fork-sync@v1.8
-  #       with:
-  #         token: ${{ secrets.PERSONAL_TOKEN }}
-  #         owner: hect0x7
-  #         auto_approve: false
-  #         ignore_fail: true
-  #         auto_merge: true
-  #         head: master # fork 的上游仓库 branch
-  #         base: master # 本地仓库 branch
-      # - uses: peter-evans/enable-pull-request-automerge@v3
-      #   with:
-      #     pull-request-number: ${{ github.event.pull_request.number }}
-      #     merge-method: merge
+      - uses: tgymnich/fork-sync@v2.0
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          owner: llvm
+          base: master
+          head: master
